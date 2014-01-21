@@ -326,3 +326,45 @@ test("can add variations", function() {
 		}
 	}
 });
+
+test("can add variations as marker parameter", function() {
+
+	// create birdsEye
+	var birdsEye = new BirdsEye();
+
+	var variations = [];
+
+	var marker = birdsEye.addMarker(0,0, variations);
+
+	console.log("uhh..." + variations.length);
+
+	equal(0, 1, "test");
+
+	// // create markers with various numbers of variations
+	// for(var i = 0; i <= BirdsEye.prototype.MAX_ZOOM; i++) {
+
+
+	// 	// var variations = [];
+
+
+	// 	// // create the array of variations
+	// 	// // for(var j = 0; j <= i; j++) {
+
+	// 	// // 	variations.push({
+	// 	// // 		"img": "img",
+	// 	// // 		"startZoom": j,
+	// 	// // 		"endZoom": j+1
+	// 	// // 	});
+	// 	// // }
+
+	// 	// // add the marker
+	// 	// var marker = birdsEye.addMarker(0, 0, variations);
+
+	// 	// // check that the marker has the right number of variations
+	// 	// equal(
+	// 	// 	marker.variations.length,
+	// 	// 	j,
+	// 	// 	"added " + j + " variations as a marker parameter"
+	// 	// );
+	// }
+});

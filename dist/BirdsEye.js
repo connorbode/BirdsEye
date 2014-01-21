@@ -115,6 +115,8 @@ BirdsEye.Marker = function(lat, lng, variations) {
 	if( ! BirdsEye.prototype.LAT_LNG_REGEX.test(lng) ) {
 		throw BirdsEye.prototype.ERROR_MESSAGES.INVALID_LONGITUDE;
 	}
+
+	console.log(variations);
 };
 
 
