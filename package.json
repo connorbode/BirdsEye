@@ -1,0 +1,24 @@
+{
+  "name": "BirdsEye",
+  "version": "0.0.0",
+  "main": "dist/BirdsEye.min.js",
+  "description": "A Javascript library for use with Google Maps API v3.  Allows for setting markers which load different images at different zoom levels.",
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/connorbode/BirdsEye.git"
+  },
+  "keywords": [],
+  "author": "Connor Bode",
+  "license": "MIT",
+  "readmeFilename": "README.md",
+  "dependencies": {},
+  "devDependencies": {
+    "grunt-contrib-concat": "~0.3.0",
+    "grunt-contrib-jshint": "~0.6.4",
+    "grunt-contrib-uglify": "~0.2.4",
+    "grunt": "~0.4.1",
+    "grunt-contrib-watch": "~0.5.3",
+    "grunt-contrib-qunit": "~0.3.0",
+    "grunt-dox": "~0.5.0"
+  }
+}
