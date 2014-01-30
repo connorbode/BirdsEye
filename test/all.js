@@ -332,39 +332,32 @@ test("can add variations as marker parameter", function() {
 	// create birdsEye
 	var birdsEye = new BirdsEye();
 
+	// Test adding a marker with no variations
 	var variations = [];
-
 	var marker = birdsEye.addMarker(0,0, variations);
+	equal(marker.variations.length, variations.length, "added an empty set of variations");
 
-	console.log("uhh..." + variations.length);
+	// Test adding a marker with 1 variation
+	variations = [
+		{
+			'img': 'img',
+			'startZoom': 1,
+			'endZoom': 1
+		}
+	];
+	marker = birdsEye.addMarker(0,0, variations);
+	equal(marker.variations.length, variations.length, "added a single variation");
 
-	equal(0, 1, "test");
+	// Add multiple 1 level variations
+	variations = [];
+	for(var i = 0; i <= BirdsEye.prototype.MAX_ZOOM; i++) {
+		variations.push({
+			'img': 'img',
+			'startZoom': i,
+			'endZoom': i
+		});
+	}
+	marker = birdsEye.addMarker(0, 0, variations);
+	equal(marker.variations.length, variations.length, "added multiple variations");
 
-	// // create markers with various numbers of variations
-	// for(var i = 0; i <= BirdsEye.prototype.MAX_ZOOM; i++) {
-
-
-	// 	// var variations = [];
-
-
-	// 	// // create the array of variations
-	// 	// // for(var j = 0; j <= i; j++) {
-
-	// 	// // 	variations.push({
-	// 	// // 		"img": "img",
-	// 	// // 		"startZoom": j,
-	// 	// // 		"endZoom": j+1
-	// 	// // 	});
-	// 	// // }
-
-	// 	// // add the marker
-	// 	// var marker = birdsEye.addMarker(0, 0, variations);
-
-	// 	// // check that the marker has the right number of variations
-	// 	// equal(
-	// 	// 	marker.variations.length,
-	// 	// 	j,
-	// 	// 	"added " + j + " variations as a marker parameter"
-	// 	// );
-	// }
 });

@@ -11,7 +11,9 @@
   "author": "Connor Bode",
   "license": "MIT",
   "readmeFilename": "README.md",
-  "dependencies": {},
+  "dependencies": {
+    "bower": "~1.2.8"
+  },
   "devDependencies": {
     "grunt-contrib-concat": "~0.3.0",
     "grunt-contrib-jshint": "~0.6.4",

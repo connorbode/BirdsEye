@@ -17,11 +17,6 @@ var BirdsEye = function() {
 	// Add a logo
 	this.addMarker = function(lat, lng, variations) {
 
-		// If there are variations
-		if(variations !== undefined) {
-			throw "error";
-		}
-
 		// append the variation to the markers array
 		var index = this.markers.push(new BirdsEye.Marker(lat, lng, variations));
 
@@ -73,6 +68,8 @@ BirdsEye.Marker = function(lat, lng, variations) {
 	this.variations = [];
 	this.variationRange = [];
 
+
+
 	/* Methods */
 
 	this.addVariation = function(img, startZoom, endZoom) {
@@ -116,7 +113,18 @@ BirdsEye.Marker = function(lat, lng, variations) {
 		throw BirdsEye.prototype.ERROR_MESSAGES.INVALID_LONGITUDE;
 	}
 
-	console.log(variations);
+	// If there are variations
+	if(variations !== undefined) {
+
+		// Iterate the variations
+		for(var i = 0; i < variations.length; i++) {
+
+			var variation = variations[i];
+
+			// Add each variation
+			this.addVariation(variation.img, variation.startZoom, variation.endZoom);
+		}
+	}
 };
 
 
