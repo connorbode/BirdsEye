@@ -361,3 +361,46 @@ test("can add variations as marker parameter", function() {
 	equal(marker.variations.length, variations.length, "added multiple variations");
 
 });
+
+
+
+
+/** INIT BIRDSEYE **/
+test("can add markers as parameter for initializing BirdsEye", function() {
+
+	// init with no markers
+	var markers = [];
+	var birdsEye = new BirdsEye(markers);
+	ok(birdsEye);
+
+	// init with one marker with no variations
+	var markers = [
+		{
+			'lat': 0,
+			'lng': 0,
+			'variations': []
+		}
+	];
+	birdsEye = new BirdsEye(markers);
+	equal(birdsEye.markers.length, markers.length, "added one marker with no variations");
+
+	// init with multiple markers with one variation each
+	var variations = [
+		{
+			'img': 'img',
+			'startZoom': 0,
+			'endZoom': 0
+		}
+	]
+	var marker = {
+		'lat': 0,
+		'lng': 0,
+		'variations': variations
+	}
+	markers = [];
+	for(var i = 0; i < 20; i++) {
+		markers.push(marker);
+	}
+	birdsEye = new BirdsEye(markers);
+	equal(birdsEye.markers.length, markers.length, "added multiple markers with one variation each");
+});

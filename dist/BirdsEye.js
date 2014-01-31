@@ -9,12 +9,13 @@
    BirdsEye class
    ============================== */
 
-var BirdsEye = function() {
+var BirdsEye = function(markers) {
 
-	// Empty array of logos
+	/** variables **/
 	this.markers = [];
+	this.events = [];
 
-	// Add a logo
+	/** functions **/
 	this.addMarker = function(lat, lng, variations) {
 
 		// append the variation to the markers array
@@ -24,6 +25,126 @@ var BirdsEye = function() {
 		return this.markers[index - 1];
 	};
 
+	this.setPin = function(google, map, marker) {
+
+		var pin = new google.maps.Marker({
+			position: new google.maps.LatLng(marker.lat, marker.lng),
+		});
+		pin.setMap(map);
+		return pin;
+	};
+
+	this.attackMap = function(google, map) {
+
+		// Get current zoom
+		var zoom = map.getZoom();
+
+		// Each key x of the events array is an array of events that occur at zoom level x
+		// An event contains a pin and a value to set for the pin
+		for(var i = 0; i <= BirdsEye.prototype.MAX_ZOOM; i++) {
+			this.events[i] = [];
+		}
+
+		// For every marker
+		for(i = 0; i < this.markers.length; i++) {
+
+			// get the marker
+			var marker = this.markers[i];
+
+			// add the marker
+			var pin = this.setPin(google, map, marker);
+			this.hidePin(pin);
+
+			// initialize an array to hold whether the marker has a value at each given zoom level
+			var filled = [];
+			for(var j = 0; j < BirdsEye.prototype.MAX_ZOOM; j++) {
+				filled[j] = false;
+			}
+
+			// iterate through the variations
+			for(j = 0; j < marker.variations.length; j++) {
+
+				// get the variation
+				var variation = marker.variations[j];
+
+				// set events for showing the image
+				this.addEvent(variation.startZoom, pin, variation.img);
+				this.addEvent(variation.endZoom, pin, variation.img);
+
+				// set the icon if the pin is in this variation
+				if(zoom >= variation.startZoom && zoom <= variation.endZoom) {
+					this.setPinIcon(pin, variation.img);
+				}
+
+				// mark the zoom levels filled
+				for(var k = variation.startZoom; k <= variation.endZoom; k++) {
+					filled[k] = true;
+				}
+			}
+
+			// for any non-filled zoom levels, add null events
+			for(j = 0; j < filled.length; j++) {
+
+				if(filled[j] === false) {
+					this.addEvent(j, pin, null);
+				}
+			}
+		}
+
+		// add the event listener to process events when zoom level changes
+		google.maps.event.addListener(map, 'zoom_changed', function() {
+			this.processEvents(map);
+		});
+	};
+
+	this.addEvent = function(zoom, pin, val) {
+
+		if(zoom >= 0 && zoom < BirdsEye.prototype.MAX_ZOOM) {
+			this.events[zoom].push({
+				'pin': pin,
+				'val': val
+			});
+		}
+	};
+
+	this.processEvents = function(map) {
+
+		var zoom = map.getZoom();
+
+		for(var i = 0; i < this.events[zoom].length; i++) {
+
+			var thisEvent = this.events[zoom][i];
+			var pin = thisEvent.pin;
+			var val = thisEvent.val;
+			if(val === null) {
+				this.hidePin(pin);
+			} else {
+				this.setPinIcon(pin, val);
+			}
+		}
+	};
+
+	this.hidePin = function(pin) {
+		pin.setVisible(false);
+	};
+
+	this.setPinIcon = function(pin, icon) {
+		pin.setIcon(icon);
+		pin.setVisible(true);
+	};
+
+
+	/** init function **/
+
+	// if there are markers, iterate through them and add them
+	if(markers !== undefined) {
+		for(var i = 0; i < markers.length; i++) {
+
+			// add the marker
+			var marker = markers[i];
+			this.addMarker(marker.lat, marker.lng, marker.variations);
+		}
+	}
 };
 
 
