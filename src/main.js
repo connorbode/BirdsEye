@@ -89,7 +89,7 @@ var BirdsEye = function(markers) {
 		// add the event listener to process events when zoom level changes
 		google.maps.event.addListener(map, 'zoom_changed', function() {
 			this.processEvents(map);
-		});
+		}.bind(this));
 	};
 
 	this.addEvent = function(zoom, pin, val) {
